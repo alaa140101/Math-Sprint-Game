@@ -27,11 +27,21 @@ let firstNumber = 0;
 let secondNumber = 0;
 let equationObject = {};
 const wrongFormat = [];
+playerGuessArray = [];
 
 // Time
 
 // Scroll
+valueY = 0
 
+// Scroll, Store user selection in playerGuessArray
+function select(guessedTrue) {
+  // Scroll 80 pixels
+  valueY += 80;
+  itemContainer.scroll(0, valueY);
+  // Add player guess to array
+  return guessedTrue ? playerGuessArray.push('true') : playerGuessArray.push('false');
+}
 // Display Game Page 
 function showGamePage() {
   countdownPage.hidden = true;
