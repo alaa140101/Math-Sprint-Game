@@ -21,7 +21,7 @@ const playAgainBtn = document.querySelector('.play-again');
 // Equations
 let questionAmount = 0;
 let equationsArray = [];
-playerGuessArray = [];
+let playerGuessArray = [];
 
 
 // Game Page
@@ -38,8 +38,31 @@ let penaltyTime = 0;
 let finalTime = 0;
 let finalTimeDisplay = '0.0s';
 
+// Reset the Game
+function playAgain() {
+  gamePage.addEventListener('click', startTimer);
+  scorePage.hidden = true;
+  splashPage.hidden = false;
+  playAgainBtn.hidden = true;
+  equationsArray = [];
+  playerGuessArray = [];
+  valueY = 0;
+}
+
 // Scroll
-valueY = 0
+let valueY = 0;
+
+// Format & Display Time in DOM
+function scoresToDOM() {
+  finalTimeDisplay = finalTime.toFixed(1);
+  baseTime = timePlayed.toFixed(1);
+  penaltyTime = penaltyTime.toFixed(1);
+  baseTimeEl.textContent = `Base Time: ${baseTime}s`;
+  finalTimeEl.textContent = `${finalTimeDisplay}s`;
+  penaltyTimeEl.textContent = `Penalty: +${penaltyTime}s`;
+  itemContainer.scrollTo({ top: 0, behavior: 'instant' });
+  showScorePage();
+}
 
 // Stop Timer, Process Results, go to Score Page
 function checkTime() {
@@ -58,12 +81,8 @@ function checkTime() {
     });
     finalTime = timePlayed + penaltyTime;
     console.log('time', timePlayed, 'penalty', penaltyTime, 'Final:', finalTime);
-  }
-
-    
-    
-    
-  
+    scoresToDOM();
+  }  
 }
 
 // Add a tenth of a second to timePlayed
@@ -94,6 +113,14 @@ function select(guessedTrue) {
 function showGamePage() {
   countdownPage.hidden = true;
   gamePage.hidden = false;
+}
+// Display Score Page
+function showScorePage() {
+  setTimeout(() => {
+    playAgainBtn.hidden = false;
+  },1000);
+  gamePage.hidden = true;
+  scorePage.hidden = false;
 }
 
 // Generate a random number of Max
